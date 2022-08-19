@@ -9,7 +9,7 @@ const app: Application = express()
 const PORT = 5172
 
 const corsOptions = {
-  origin: 'localhost:5173',
+  origin: 'http://localhost:5173',
   optionsSuccessStatus: 200,
 }
 app.use(cors(corsOptions))

@@ -9,7 +9,7 @@ interface Person {
 
 interface Purchase {
   name: string
-  persons: Person
+  persons: Person[]
   note: string
 }
 
@@ -19,11 +19,11 @@ const PersonSchema = new Schema<Person>({
   paid: Number,
   toPay: Number,
 })
-export const PersonModel = model('people', PersonSchema)
+export const PersonModel = model('person', PersonSchema)
 
 const PurchaseSchema = new Schema<Purchase>({
   name: String,
   persons: [PersonSchema],
   note: String,
 })
-export const PurchaseModel = model('purchases', PurchaseSchema)
+export const PurchaseModel = model('purchase', PurchaseSchema)
