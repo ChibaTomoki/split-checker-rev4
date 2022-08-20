@@ -1,29 +1,42 @@
 import { Schema, model } from 'mongoose'
-
 interface Person {
-  index: number
   name: string
+}
+
+interface PersonAddedId extends Person {
+  _id: string
+}
+
+interface PurchasePerson extends PersonAddedId {
   paid: number
   toPay: number
 }
 
 interface Purchase {
   name: string
-  persons: Person[]
+  people: PurchasePerson[]
   note: string
 }
 
+interface PurchaseAddedId {
+  _id: string
+}
+
 const PersonSchema = new Schema<Person>({
-  index: Number,
+  name: String,
+})
+export const PersonModel = model('person', PersonSchema)
+
+const PurchasePersonSchema = new Schema<PurchasePerson>({
+  _id: String,
   name: String,
   paid: Number,
   toPay: Number,
 })
-export const PersonModel = model('person', PersonSchema)
 
 const PurchaseSchema = new Schema<Purchase>({
   name: String,
-  persons: [PersonSchema],
+  people: [PurchasePersonSchema],
   note: String,
 })
 export const PurchaseModel = model('purchase', PurchaseSchema)

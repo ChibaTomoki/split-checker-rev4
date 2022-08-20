@@ -1,78 +1,59 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
-import axios from 'axios'
+import { reactive } from 'vue'
+import { storeToRefs } from 'pinia'
+import { Purchase } from '../model'
+import usePeople from '../store/usePeople'
+import usePurchases from '../store/usePurchases'
 
-const purchaseName = ref('')
-const personsPurchases = reactive({
-  foo: {
+const peopleStore = usePeople()
+const { peopleGetter } = storeToRefs(peopleStore)
+const { getPeople } = peopleStore
+const { getPurchases, postPurchase } = usePurchases()
+
+await getPeople()
+const inputPurchase = reactive<Purchase>({
+  name: '',
+  people: peopleGetter.value.map((x) => ({
+    _id: x._id,
+    name: x.name,
     paid: 0,
     toPay: 0,
-  },
-  bar: {
-    paid: 0,
-    toPay: 0,
-  },
+  })),
+  note: '',
 })
-const purchaseNote = ref('')
-
-const fetch = async (): Promise<void> => {
-  const getData = await axios.get('http://localhost:5172/api/v1/purchases')
-  console.log(getData)
-}
-const post = async (): Promise<void> => {
-  const postedData = await axios.post('http://localhost:5172/api/v1/purchases', {
-    name: purchaseName.value,
-    persons: [
-      {
-        index: 0,
-        name: 'foo',
-        paid: personsPurchases.foo.paid,
-        toPay: personsPurchases.foo.toPay,
-      },
-      {
-        index: 1,
-        name: 'bar',
-        paid: personsPurchases.bar.paid,
-        toPay: personsPurchases.bar.toPay,
-      },
-    ],
-    note: purchaseNote.value,
-  })
-  console.log(postedData)
-}
 </script>
+
 <template>
-  <div>InputForm</div>
-  <label>
-    購入品
-    <input type="text" v-model="purchaseName" />
-  </label>
-  <div>debug: {{ purchaseName }}</div>
-  <label>
-    fooの払った額
-    <input type="text" v-model.number="personsPurchases.foo.paid" />
-  </label>
-  <div>debug: {{ personsPurchases.foo.paid }}</div>
-  <label>
-    fooの払う額
-    <input type="text" v-model.number="personsPurchases.foo.toPay" />
-  </label>
-  <div>debug: {{ personsPurchases.foo.toPay }}</div>
-  <label>
-    barの払った額
-    <input type="text" v-model.number="personsPurchases.bar.paid" />
-  </label>
-  <div>debug: {{ personsPurchases.bar.paid }}</div>
-  <label>
-    barの払う額
-    <input type="text" v-model.number="personsPurchases.bar.toPay" />
-  </label>
-  <div>debug: {{ personsPurchases.bar.toPay }}</div>
-  <label>
-    メモ
-    <input type="text" v-model="purchaseNote" />
-  </label>
-  <div>debug: {{ purchaseNote }}</div>
-  <button @click="fetch">fetch</button>
-  <button @click="post">post</button>
+  <div class="container">
+    <h3>InputForm</h3>
+    <div>
+      <label for="name"> 購入品 </label>
+      <input id="name" type="text" v-model="inputPurchase.name" />
+    </div>
+    <template v-for="person in inputPurchase.people" :key="person._id">
+      <div>
+        <label :for="person._id"> {{ person.name }}の払った額</label>
+        <input :id="person._id" type="number" v-model.number="person.paid" />
+      </div>
+    </template>
+    <template v-for="person in inputPurchase.people" :key="person._id">
+      <div>
+        <label :for="person._id"> {{ person.name }}の払う額</label>
+        <input :id="person._id" type="number" v-model.number="person.toPay" />
+      </div>
+    </template>
+    <div>
+      <label for="note"> メモ </label>
+      <input id="note" type="text" v-model="inputPurchase.note" />
+    </div>
+    <button @click="getPurchases">get</button>
+    <button @click="postPurchase(inputPurchase)">post</button>
+  </div>
 </template>
+
+<style scoped>
+.container {
+  background: lightgray;
+  margin: 4px;
+}
+</style>
