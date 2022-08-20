@@ -1,7 +1,7 @@
 import express, { Application } from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
-import purchaseRoute from './routes/purchases'
+import unsettledPurchaseRoute from './routes/unsettledPurchases'
 import peopleRoute from './routes/people'
 import connectDB from './db/connect'
 dotenv.config()
@@ -17,7 +17,7 @@ app.use(cors(corsOptions))
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use('/api/v1/purchases', purchaseRoute)
+app.use('/api/v1/unsettledpurchases', unsettledPurchaseRoute)
 app.use('/api/v1/people', peopleRoute)
 
 const start = async () => {

@@ -34,9 +34,9 @@ const PurchasePersonSchema = new Schema<PurchasePerson>({
   toPay: Number,
 })
 
-const PurchaseSchema = new Schema<Purchase>({
+const UnsettledPurchaseSchema = new Schema<Purchase>({
   name: String,
   people: [PurchasePersonSchema],
   note: String,
 })
-export const PurchaseModel = model('purchase', PurchaseSchema)
+export const UnsettledPurchaseModel = model('unsettledPurchase', UnsettledPurchaseSchema)

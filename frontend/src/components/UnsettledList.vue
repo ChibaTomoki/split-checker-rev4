@@ -1,40 +1,40 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { watch } from 'vue'
-import usePurchases from '../store/usePurchases'
+import useUnsettledPurchases from '../store/useUnsettledPurchases'
 
-const purchasesStore = usePurchases()
-const { purchasesGetter } = storeToRefs(purchasesStore)
-const { getPurchases, deletePurchase } = purchasesStore
+const unsettledPurchasesStore = useUnsettledPurchases()
+const { unsettledPurchasesGetter } = storeToRefs(unsettledPurchasesStore)
+const { getUnsettledPurchases, deleteUnsettledPurchase } = unsettledPurchasesStore
 
-await getPurchases()
+await getUnsettledPurchases()
 
 watch(
-  () => purchasesGetter,
-  () => getPurchases()
+  () => unsettledPurchasesGetter,
+  () => getUnsettledPurchases()
 )
 </script>
 <template>
   <div class="container">
     <h3>UnsettledList</h3>
-    <template v-for="purchase in purchasesGetter" :key="purchase._id">
-      <div class="purchaseList">
-        <div>購入品: {{ purchase.name }}</div>
-        <template v-for="person in purchase.people" :key="person._id">
+    <template v-for="unsettledPurchase in unsettledPurchasesGetter" :key="unsettledPurchase._id">
+      <div class="unsettled-purchase-list">
+        <div>購入品: {{ unsettledPurchase.name }}</div>
+        <template v-for="person in unsettledPurchase.people" :key="person._id">
           <div>{{ person.name }}の払った額: {{ person.paid }}</div>
         </template>
-        <template v-for="person in purchase.people" :key="person._id">
+        <template v-for="person in unsettledPurchase.people" :key="person._id">
           <div>{{ person.name }}の払う額: {{ person.toPay }}</div>
         </template>
-        <div>メモ: {{ purchase.note }}</div>
+        <div>メモ: {{ unsettledPurchase.note }}</div>
       </div>
-      <button @click="deletePurchase(purchase._id)">削除</button>
+      <button @click="deleteUnsettledPurchase(unsettledPurchase._id)">delete</button>
     </template>
   </div>
 </template>
 
 <style scoped>
-.purchaseList {
+.unsettled-purchase-list {
   margin-top: 1rem;
 }
 </style>
