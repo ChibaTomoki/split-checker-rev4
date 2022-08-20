@@ -3,12 +3,12 @@ import { reactive, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { Purchase } from '../model'
 import usePeople from '../store/usePeople'
-import useUnsettledPurchases from '../store/useUnsettledPurchases'
+import usePurchases from '../store/usePurchases'
 
 const peopleStore = usePeople()
 const { peopleGetter } = storeToRefs(peopleStore)
 const { getPeople } = peopleStore
-const { postUnsettledPurchase } = useUnsettledPurchases()
+const { getPurchases, postPurchase } = usePurchases()
 
 await getPeople()
 const inputPurchase = reactive<Purchase>({
@@ -57,6 +57,7 @@ watch(
       <label for="note"> メモ </label>
       <input id="note" type="text" v-model="inputPurchase.note" />
     </div>
-    <button @click="postUnsettledPurchase(inputPurchase)">post</button>
+    <button @click="getPurchases">get</button>
+    <button @click="postPurchase(inputPurchase)">post</button>
   </div>
 </template>
