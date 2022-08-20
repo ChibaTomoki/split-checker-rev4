@@ -46,6 +46,15 @@ const usePeople = defineStore('people', {
         catchError(error)
       }
     },
+    async deletePerson(id: string): Promise<void> {
+      try {
+        const res: AxiosResponse<PersonAddedId> = await axios.delete(`${peopleApiUrl}/${id}`)
+        console.log(res)
+        this.getPeople()
+      } catch (error: unknown) {
+        catchError(error)
+      }
+    },
   },
 })
 

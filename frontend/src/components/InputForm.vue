@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { Purchase } from '../model'
 import usePeople from '../store/usePeople'
@@ -21,6 +21,17 @@ const inputPurchase = reactive<Purchase>({
   })),
   note: '',
 })
+
+watch(
+  () => peopleGetter.value,
+  () =>
+    (inputPurchase.people = peopleGetter.value.map((x) => ({
+      _id: x._id,
+      name: x.name,
+      paid: 0,
+      toPay: 0,
+    })))
+)
 </script>
 
 <template>

@@ -1,9 +1,10 @@
 import express from 'express'
-import { getPeople, postPerson } from '../controllers/people'
+import { getPeople, postPerson, deletePerson } from '../controllers/people'
 
 const router = express.Router()
 
 router.get('/', getPeople)
 router.post('/', postPerson)
+router.delete('/:id', deletePerson)
 
 export default router

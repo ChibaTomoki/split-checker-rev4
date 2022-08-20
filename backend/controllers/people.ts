@@ -15,7 +15,6 @@ export const getPeople = async (req: Request, res: Response) => {
   console.log('getPeople is called')
   try {
     const allPeople = await PersonModel.find(req.body)
-    console.log(req)
     res.status(200).json(allPeople)
   } catch (error: unknown) {
     catchError(res, error)
@@ -26,8 +25,17 @@ export const postPerson = async (req: Request, res: Response) => {
   console.log('postPerson is called')
   try {
     const postedPerson = await PersonModel.create(req.body)
-    console.log(req)
     res.status(200).json(postedPerson)
+  } catch (error: unknown) {
+    catchError(res, error)
+  }
+}
+
+export const deletePerson = async (req: Request, res: Response) => {
+  console.log('deletePerson is called')
+  try {
+    const deletedPerson = await PersonModel.deleteOne({ _id: req.params.id })
+    res.status(200).json(deletedPerson)
   } catch (error: unknown) {
     catchError(res, error)
   }
