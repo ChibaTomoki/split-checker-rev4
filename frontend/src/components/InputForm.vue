@@ -8,7 +8,7 @@ import usePurchases from '../store/usePurchases'
 const peopleStore = usePeople()
 const { peopleGetter } = storeToRefs(peopleStore)
 const { getPeople } = peopleStore
-const { getPurchases, postPurchase } = usePurchases()
+const { postPurchase } = usePurchases()
 
 await getPeople()
 const inputPurchase = reactive<Purchase>({
@@ -57,7 +57,6 @@ watch(
       <label for="note"> メモ </label>
       <input id="note" type="text" v-model="inputPurchase.note" />
     </div>
-    <button @click="getPurchases">get</button>
     <button @click="postPurchase(inputPurchase)">post</button>
   </div>
 </template>

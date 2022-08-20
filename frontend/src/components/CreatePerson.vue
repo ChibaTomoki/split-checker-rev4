@@ -5,7 +5,7 @@ import usePeople from '../store/usePeople'
 
 const peopleStore = usePeople()
 const { peopleGetter } = storeToRefs(peopleStore)
-const { getPeople, postPerson, deletePerson } = peopleStore
+const { postPerson, deletePerson } = peopleStore
 const inputPersonName = ref('')
 </script>
 
@@ -18,7 +18,6 @@ const inputPersonName = ref('')
         <input type="text" v-model="inputPersonName" />
       </label>
     </div>
-    <button @click="getPeople">get</button>
     <button @click="postPerson(inputPersonName)">post</button>
     <ul>
       <template v-for="person in peopleGetter" :key="person._id">
