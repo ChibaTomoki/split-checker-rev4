@@ -17,6 +17,6 @@ export interface Purchase {
   note: string
 }
 
-export interface PurchaseAddedId {
+export interface PurchaseAddedId extends Purchase {
   _id: string
 }

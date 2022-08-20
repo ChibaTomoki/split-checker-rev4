@@ -14,7 +14,10 @@ import DeletedList from './components/DeletedList.vue'
     <InputForm />
     <template #fallback> Loading... </template>
   </Suspense>
-  <!-- <UnsettledList /> -->
+  <Suspense>
+    <UnsettledList />
+    <template #fallback> Loading... </template>
+  </Suspense>
   <!-- <SettledList /> -->
   <!-- <DeletedList /> -->
 </template>

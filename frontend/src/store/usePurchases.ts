@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia'
 import axios, { AxiosResponse } from 'axios'
-import { Purchase } from '../model'
+import { Purchase, PurchaseAddedId } from '../model'
 
 interface State {
-  purchases: Purchase[]
+  purchases: PurchaseAddedId[]
 }
 
 const purchasesApiUrl = 'http://localhost:5172/api/v1/purchases'
@@ -25,12 +25,12 @@ const usePurchases = defineStore('purchases', {
     purchases: [],
   }),
   getters: {
-    PurchasesGetter: (state) => state.purchases,
+    purchasesGetter: (state) => state.purchases,
   },
   actions: {
     async getPurchases(): Promise<void> {
       try {
-        const res: AxiosResponse<Purchase[]> = await axios.get(purchasesApiUrl)
+        const res: AxiosResponse<PurchaseAddedId[]> = await axios.get(purchasesApiUrl)
         console.log(res)
         this.purchases = res.data
       } catch (error: unknown) {
@@ -39,7 +39,16 @@ const usePurchases = defineStore('purchases', {
     },
     async postPurchase(purchase: Purchase): Promise<void> {
       try {
-        const res: AxiosResponse<Purchase> = await axios.post(purchasesApiUrl, purchase)
+        const res: AxiosResponse<PurchaseAddedId> = await axios.post(purchasesApiUrl, purchase)
+        console.log(res)
+        this.getPurchases()
+      } catch (error: unknown) {
+        catchError(error)
+      }
+    },
+    async deletePurchase(id: string): Promise<void> {
+      try {
+        const res: AxiosResponse<PurchaseAddedId> = await axios.delete(`${purchasesApiUrl}/${id}`)
         console.log(res)
         this.getPurchases()
       } catch (error: unknown) {

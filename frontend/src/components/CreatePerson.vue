@@ -18,10 +18,3 @@ const personName = ref('')
     <button @click="postPerson(personName)">post</button>
   </div>
 </template>
-
-<style scoped>
-.container {
-  background: lightgray;
-  margin: 4px;
-}
-</style>

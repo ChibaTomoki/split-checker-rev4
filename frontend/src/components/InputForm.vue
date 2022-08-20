@@ -50,10 +50,3 @@ const inputPurchase = reactive<Purchase>({
     <button @click="postPurchase(inputPurchase)">post</button>
   </div>
 </template>
-
-<style scoped>
-.container {
-  background: lightgray;
-  margin: 4px;
-}
-</style>
