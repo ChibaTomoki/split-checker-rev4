@@ -12,7 +12,7 @@ interface PurchasePerson extends PersonAddedId {
   toPay: number
 }
 
-type Stage = 'Unsettled' | 'Setteled' | 'Deleted'
+type Stage = 'Unsettled' | 'Setteled' | 'Archived'
 
 interface Purchase {
   name: string

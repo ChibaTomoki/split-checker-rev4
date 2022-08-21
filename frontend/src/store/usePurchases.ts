@@ -55,8 +55,28 @@ const usePurchases = defineStore('purchases', {
         catchError(error)
       }
     },
+    async changePurchaseStage(id: string, stage: Stage): Promise<void> {
+      const body: { stage: Stage } = { stage }
+      try {
+        const res: AxiosResponse<PurchaseAddedId> = await axios.patch(`${purchasesApiUrl}/${id}`, body)
+        console.log(res)
+        this.getPurchases()
+      } catch (error: unknown) {
+        catchError(error)
+      }
+    },
     async settlePurchase(id: string): Promise<void> {
       const body: { stage: Stage } = { stage: 'Settled' }
+      try {
+        const res: AxiosResponse<PurchaseAddedId> = await axios.patch(`${purchasesApiUrl}/${id}`, body)
+        console.log(res)
+        this.getPurchases()
+      } catch (error: unknown) {
+        catchError(error)
+      }
+    },
+    async archivePurchase(id: string): Promise<void> {
+      const body: { stage: Stage } = { stage: 'Archived' }
       try {
         const res: AxiosResponse<PurchaseAddedId> = await axios.patch(`${purchasesApiUrl}/${id}`, body)
         console.log(res)

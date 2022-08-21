@@ -5,7 +5,7 @@ import usePurchases from '../store/usePurchases'
 
 const purchasesStore = usePurchases()
 const { purchasesGetter } = storeToRefs(purchasesStore)
-const { getPurchases, deletePurchase } = purchasesStore
+const { getPurchases, changePurchaseStage } = purchasesStore
 
 await getPurchases()
 
@@ -16,7 +16,7 @@ watch(
 </script>
 <template>
   <div class="container">
-    <h3>SettledList</h3>
+    <h3>精算済みリスト</h3>
     <template v-for="purchase in purchasesGetter" :key="purchase._id">
       <div v-if="purchase.stage === 'Settled'" class="purchaseList">
         <div>購入品: {{ purchase.name }}</div>
@@ -27,7 +27,8 @@ watch(
           <div>{{ person.name }}の払う額: {{ person.toPay }}</div>
         </template>
         <div>メモ: {{ purchase.note }}</div>
-        <button @click="deletePurchase(purchase._id)">削除</button>
+        <button @click="changePurchaseStage(purchase._id, 'Unsettled')">未精算リストに復元</button>
+        <button @click="changePurchaseStage(purchase._id, 'Archived')">削除</button>
       </div>
     </template>
   </div>

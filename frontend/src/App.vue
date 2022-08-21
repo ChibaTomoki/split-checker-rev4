@@ -4,7 +4,7 @@ import SummaryPart from './components/SummaryPart.vue'
 import InputForm from './components/InputForm.vue'
 import UnsettledList from './components/UnsettledList.vue'
 import SettledList from './components/SettledList.vue'
-import DeletedList from './components/DeletedList.vue'
+import ArchivedList from './components/ArchivedList.vue'
 </script>
 
 <template>
@@ -22,5 +22,8 @@ import DeletedList from './components/DeletedList.vue'
     <SettledList />
     <template #fallback> Loading... </template>
   </Suspense>
-  <!-- <DeletedList /> -->
+  <Suspense>
+    <ArchivedList />
+    <template #fallback> Loading... </template>
+  </Suspense>
 </template>

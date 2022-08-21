@@ -11,7 +11,7 @@ export interface PurchasePerson extends PersonAddedId {
   toPay: number
 }
 
-export type Stage = 'Unsettled' | 'Settled' | 'Deleted'
+export type Stage = 'Unsettled' | 'Settled' | 'Archived'
 
 export interface Purchase {
   name: string
