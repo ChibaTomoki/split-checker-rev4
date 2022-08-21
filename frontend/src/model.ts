@@ -11,10 +11,13 @@ export interface PurchasePerson extends PersonAddedId {
   toPay: number
 }
 
+export type Stage = 'Unsettled' | 'Settled' | 'Deleted'
+
 export interface Purchase {
   name: string
   people: PurchasePerson[]
   note: string
+  stage: Stage
 }
 
 export interface PurchaseAddedId extends Purchase {

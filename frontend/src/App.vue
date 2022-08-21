@@ -18,6 +18,9 @@ import DeletedList from './components/DeletedList.vue'
     <UnsettledList />
     <template #fallback> Loading... </template>
   </Suspense>
-  <!-- <SettledList /> -->
+  <Suspense>
+    <SettledList />
+    <template #fallback> Loading... </template>
+  </Suspense>
   <!-- <DeletedList /> -->
 </template>

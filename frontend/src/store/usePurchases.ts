@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import axios, { AxiosResponse } from 'axios'
-import { Purchase, PurchaseAddedId } from '../model'
+import { Purchase, PurchaseAddedId, Stage } from '../model'
 
 interface State {
   purchases: PurchaseAddedId[]
@@ -49,6 +49,16 @@ const usePurchases = defineStore('purchases', {
     async deletePurchase(id: string): Promise<void> {
       try {
         const res: AxiosResponse<PurchaseAddedId> = await axios.delete(`${purchasesApiUrl}/${id}`)
+        console.log(res)
+        this.getPurchases()
+      } catch (error: unknown) {
+        catchError(error)
+      }
+    },
+    async settlePurchase(id: string): Promise<void> {
+      const body: { stage: Stage } = { stage: 'Settled' }
+      try {
+        const res: AxiosResponse<PurchaseAddedId> = await axios.patch(`${purchasesApiUrl}/${id}`, body)
         console.log(res)
         this.getPurchases()
       } catch (error: unknown) {

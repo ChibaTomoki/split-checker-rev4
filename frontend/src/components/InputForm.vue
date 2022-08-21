@@ -20,6 +20,7 @@ const inputPurchase = reactive<Purchase>({
     toPay: 0,
   })),
   note: '',
+  stage: 'Unsettled',
 })
 
 watch(

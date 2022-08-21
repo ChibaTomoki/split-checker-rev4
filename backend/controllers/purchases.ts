@@ -14,7 +14,7 @@ const catchError = (res: Response, error: unknown) => {
 export const getPurchases = async (req: Request, res: Response) => {
   console.log('getPurchases is called')
   try {
-    const allPurchases = await PurchaseModel.find(req.body)
+    const allPurchases = await PurchaseModel.find()
     res.status(200).json(allPurchases)
   } catch (error: unknown) {
     catchError(res, error)
@@ -56,8 +56,18 @@ export const deletePurchases = async (req: Request, res: Response) => {
 export const putPurchase = async (req: Request, res: Response) => {
   console.log('putPurchase is called')
   try {
-    const putPurchase = await PurchaseModel.replaceOne({ _id: req.params.id })
+    const putPurchase = await PurchaseModel.replaceOne({ _id: req.params.id }, req.body)
     res.status(200).json(putPurchase)
+  } catch (error: unknown) {
+    catchError(res, error)
+  }
+}
+
+export const patchPurchase = async (req: Request, res: Response) => {
+  console.log('patchPurchase is called')
+  try {
+    const patchPurchase = await PurchaseModel.updateOne({ _id: req.params.id }, req.body)
+    res.status(200).json(patchPurchase)
   } catch (error: unknown) {
     catchError(res, error)
   }

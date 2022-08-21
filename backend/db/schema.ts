@@ -12,10 +12,13 @@ interface PurchasePerson extends PersonAddedId {
   toPay: number
 }
 
+type Stage = 'Unsettled' | 'Setteled' | 'Deleted'
+
 interface Purchase {
   name: string
   people: PurchasePerson[]
   note: string
+  stage: Stage
 }
 
 interface PurchaseAddedId {
@@ -38,5 +41,6 @@ const PurchaseSchema = new Schema<Purchase>({
   name: String,
   people: [PurchasePersonSchema],
   note: String,
+  stage: String,
 })
 export const PurchaseModel = model('purchase', PurchaseSchema)

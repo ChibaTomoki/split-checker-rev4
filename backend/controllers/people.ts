@@ -14,7 +14,7 @@ const catchError = (res: Response, error: unknown) => {
 export const getPeople = async (req: Request, res: Response) => {
   console.log('getPeople is called')
   try {
-    const allPeople = await PersonModel.find(req.body)
+    const allPeople = await PersonModel.find()
     res.status(200).json(allPeople)
   } catch (error: unknown) {
     catchError(res, error)
